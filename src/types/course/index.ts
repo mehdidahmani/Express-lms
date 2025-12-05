@@ -1,4 +1,9 @@
-import { ALLOWED_CONTENT_TYPES, ALLOWED_DOCUMENT_TYPES } from '$src/constants/upload';
+import {
+  ALLOWED_CONTENT_TYPES,
+  ALLOWED_CONTENT_TYPES_ARRAY,
+  ALLOWED_DOCUMENT_TYPES,
+  ALLOWED_DOCUMENT_TYPES_ARRAY
+} from '$src/constants/upload';
 
 import { z } from 'zod';
 
@@ -23,22 +28,20 @@ export type TCourseDownloadContent = z.infer<typeof ZCourseDownloadContent>;
 
 export const ZCoursePresignUrlUpload = z.object({
   fileName: z.string().min(1, 'File name is required'),
-  fileType: z.enum(ALLOWED_CONTENT_TYPES, {
-    error: () => ({
-      message: `Invalid content type. Allowed types: ${ALLOWED_CONTENT_TYPES.join(', ')}`
+  fileType: z
+    .enum(ALLOWED_CONTENT_TYPES_ARRAY, {
+      invalid_type_error: `Invalid content type. Allowed types: ${ALLOWED_CONTENT_TYPES.join(', ')}`
     })
-  })
 });
 
 export type TCoursePresignUrlUpload = z.infer<typeof ZCoursePresignUrlUpload>;
 
 export const ZCourseDocumentPresignUrlUpload = z.object({
   fileName: z.string().min(1, 'File name is required'),
-  fileType: z.enum(ALLOWED_DOCUMENT_TYPES, {
-    error: () => ({
-      message: `Invalid content type. Allowed types: ${ALLOWED_DOCUMENT_TYPES.join(', ')}`
+  fileType: z
+    .enum(ALLOWED_DOCUMENT_TYPES_ARRAY, {
+      invalid_type_error: `Invalid content type. Allowed types: ${ALLOWED_DOCUMENT_TYPES.join(', ')}`
     })
-  })
 });
 
 export type TCourseDocumentPresignUrlUpload = z.infer<typeof ZCourseDocumentPresignUrlUpload>;
